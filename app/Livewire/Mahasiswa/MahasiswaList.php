@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Mahasiswa;
 
+use App\Exports\MahasiswaExport;
 use App\Helpers\Setting;
 use App\Models\Mahasiswa;
 use App\Models\Prodi;
@@ -219,6 +220,15 @@ class MahasiswaList extends Component
     {
         $this->reset();
         $this->resetPage();
+    }
+
+    public function exportexcel()
+    {
+        if ($this->searchProdi) {
+            return (new MahasiswaExport($this->searchProdi))->download('mahasiswa_' . $this->searchProdi . '.xlsx');
+        } else {
+            return (new MahasiswaExport('all'))->download('mahasiswa_all.xlsx');
+        }
     }
 
     public function render()

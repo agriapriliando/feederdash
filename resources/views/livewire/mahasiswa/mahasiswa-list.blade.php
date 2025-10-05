@@ -16,6 +16,9 @@
                 <div wire:loading wire:target="startImport" class="w-full px-5 py-2 sm:px-6 sm:py-4 text-center text-gray-50 bg-orange-400 rounded-t-2xl">
                     <span>Memproses data... Harap tunggu.</span>
                 </div>
+                <div wire:loading wire:target="exportexcel" class="w-full px-5 py-2 sm:px-6 sm:py-4 text-center text-gray-50 bg-orange-400 rounded-t-2xl">
+                    <span>Memproses Excel... Harap tunggu.</span>
+                </div>
                 @if ($running)
                     <div @if ($running) wire:poll.1000ms="processBatch" @endif class="mt-4">
                         <div class="w-full px-5 py-2 sm:px-6 sm:py-4 text-center text-gray-50 bg-orange-400 rounded-t-2xl">
@@ -37,12 +40,11 @@
                     <!-- Elements -->
                     <div class="flex flex-wrap items-center gap-2" x-data="{ reset: false, openImport: false }">
                         <div class="flex items-center">
-                            <button wire:click="thisreset()" class="text-white pb-1 me-2">
+                            <button wire:click="exportexcel()" class="text-white pb-1 me-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3" />
+                                        d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                                 </svg>
-
                             </button>
                             <button wire:click="cekJumlah()" class="text-white pb-1 me-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -103,6 +105,13 @@
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-8 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
 
                         </div>
+                        <button wire:click="thisreset()" class="text-white pb-1 me-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3" />
+                            </svg>
+
+                        </button>
 
                     </div>
                 </div>
