@@ -16,6 +16,7 @@ class MahasiswaExport implements FromQuery, WithHeadings, WithMapping, ShouldAut
     use Exportable;
 
     public $nama_program_studi;
+    public $nama_status_mahasiswa;
     protected $rowNumber = 0;
 
     // 🛑 Kolom yang tidak mau disertakan
@@ -62,9 +63,10 @@ class MahasiswaExport implements FromQuery, WithHeadings, WithMapping, ShouldAut
         'updated_at',
     ];
 
-    public function __construct($nama_program_studi)
+    public function __construct($nama_program_studi, $nama_status_mahasiswa = null)
     {
         $this->nama_program_studi = $nama_program_studi;
+        $this->nama_status_mahasiswa = $nama_status_mahasiswa;
     }
 
     public function query()
@@ -81,8 +83,14 @@ class MahasiswaExport implements FromQuery, WithHeadings, WithMapping, ShouldAut
 
         $query = Mahasiswa::select($filtered);
 
-        if ($this->nama_program_studi != 'all') {
+        // Filter berdasarkan prodi (jika bukan 'all')
+        if ($this->nama_program_studi && $this->nama_program_studi !== 'all') {
             $query->where('nama_program_studi', $this->nama_program_studi);
+        }
+
+        // Filter berdasarkan status mahasiswa (jika diisi)
+        if (!empty($this->nama_status_mahasiswa)) {
+            $query->where('nama_status_mahasiswa', $this->nama_status_mahasiswa);
         }
 
         return $query;

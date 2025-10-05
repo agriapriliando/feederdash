@@ -22,6 +22,7 @@ class MahasiswaList extends Component
     public $kolomcheckopen = true;
 
     public $filterKustom = "";
+    public $searchNamaStatusMahasiswa = '';
     // public $filterKustom = "nama_program_studi = 'S1 Pendidikan Agama Kristen'";
 
     public $offset = 0;
@@ -63,9 +64,9 @@ class MahasiswaList extends Component
             $this->done = Mahasiswa::count();
         }
         if ($this->done == $this->total) {
-            session()->flash('message', 'Total Mahasiswa : ' . $this->total) . ' (Sudah lengkap, tidak perlu import)';
+            session()->flash('message', 'Total Mahasiswa : ' . $this->total . ' (Sudah lengkap, tidak perlu Sinkron Neo)');
         } else {
-            session()->flash('message', 'Total Mahasiswa di Neo Feeder: ' . $this->total . ', di Database: ' . $this->done . ' (Perlu import: ' . ($this->total - $this->done) . ')');
+            session()->flash('message', 'Total Mahasiswa di Neo Feeder: ' . $this->total . ', di Database: ' . $this->done . ' (Perlu sinkron: ' . ($this->total - $this->done) . ')');
         }
     }
 
@@ -104,7 +105,7 @@ class MahasiswaList extends Component
             $apiLastUpdate = isset($item['last_update']) ? Carbon::parse($item['last_update']) : null; // waktu last_update dari API
 
             if (!isset($localData[$id])) { // jika data belum ada di DB
-                // data belum ada di DB → import
+                // data belum ada di DB → sinkron
                 return true;
             }
 
@@ -118,7 +119,7 @@ class MahasiswaList extends Component
 
         // --- Simpan hasil filter ke session ---
         if (empty($filtered)) {
-            session()->flash('message', 'Tidak ada data baru untuk diimport.');
+            session()->flash('message', 'Tidak ada data baru untuk diSinkron.');
             return;
         }
 
@@ -139,7 +140,7 @@ class MahasiswaList extends Component
         // cek index pada array, offset selalu bertambah
         if (!isset($all[$this->offset])) {
             $this->running = false;
-            session()->flash('message', 'Import selesai! Mahasiswa Ditambahkan: ' . $this->total . ' Orang. ');
+            session()->flash('message', 'Sinkron Neo selesai! Mahasiswa Ditambahkan: ' . $this->total . ' Orang. ');
             return;
         }
 
@@ -171,14 +172,14 @@ class MahasiswaList extends Component
 
         if ($this->done >= $this->total) {
             $this->running = false;
-            session()->flash('message', 'Import selesai! Mahasiswa Ditambahkan: ' . $this->total . ' Orang. ');
+            session()->flash('message', 'Sinkron Neo selesai! Mahasiswa Ditambahkan: ' . $this->total . ' Orang. ');
         }
     }
 
     public function stopImport()
     {
         $this->running = false;
-        session()->flash('message', 'Import dihentikan. Total yang diimport: ' . $this->done);
+        session()->flash('message', 'Sinkron dihentikan. Total yang diSinkron: ' . $this->done);
     }
 
     public function resetTable()
@@ -224,8 +225,8 @@ class MahasiswaList extends Component
 
     public function exportexcel()
     {
-        if ($this->searchProdi) {
-            return (new MahasiswaExport($this->searchProdi))->download('mahasiswa_' . $this->searchProdi . '.xlsx');
+        if ($this->searchProdi || $this->searchNamaStatusMahasiswa) {
+            return (new MahasiswaExport($this->searchProdi, $this->searchNamaStatusMahasiswa))->download('mahasiswa_' . $this->searchProdi . '.xlsx');
         } else {
             return (new MahasiswaExport('all'))->download('mahasiswa_all.xlsx');
         }
@@ -276,12 +277,19 @@ class MahasiswaList extends Component
                 'series' => $drilldownData,
             ],
         ];
+
+        $namaStatusMahasiswaList = Mahasiswa::select('nama_status_mahasiswa')
+            ->distinct()
+            ->orderBy('nama_status_mahasiswa')
+            ->pluck('nama_status_mahasiswa');
         return view('livewire.mahasiswa.mahasiswa-list', [
             'mahasiswa' => Mahasiswa::search($this->search)
                 ->searchProdi($this->searchProdi)
+                ->searchNamaStatusMahasiswa($this->searchNamaStatusMahasiswa)
                 ->paginate($this->perPage),
             'prodis' => Prodi::orderBy('nama_program_studi')->get(),
             'chartData' => $chartData,
+            'namaStatusMahasiswaList' => $namaStatusMahasiswaList,
         ]);
     }
 }

@@ -11,8 +11,10 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
-Route::get('/', PageLogin::class)->name('login');
+Route::get('/', function () {
+    return redirect()->route('mahasiswa.index');
+})->name('home');
+Route::get('/login', PageLogin::class)->name('login');
 Route::middleware([CheckCacheLogin::class])->group(function () {
     Route::get('/logout', function () {
         Cache::forget('user_logged_in');

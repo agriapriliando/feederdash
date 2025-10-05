@@ -11,7 +11,7 @@
                     @endsession
                 </div>
                 <div wire:loading wire:target="cekJumlah" class="w-full px-5 py-2 sm:px-6 sm:py-4 text-center text-gray-50 bg-orange-400 rounded-t-2xl">
-                    <span>Memproses data... Harap tunggu.</span>
+                    <span>Checking data... Harap tunggu.</span>
                 </div>
                 <div wire:loading wire:target="startImport" class="w-full px-5 py-2 sm:px-6 sm:py-4 text-center text-gray-50 bg-orange-400 rounded-t-2xl">
                     <span>Memproses data... Harap tunggu.</span>
@@ -37,22 +37,25 @@
                     <h3 class="font-medium text-gray-300">
                         Daftar Mahasiswa
                     </h3>
+                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">Pilih Prodi sebelum Sinkron Data Neo Feeder, untuk sinkron per Prodi</p>
                     <!-- Elements -->
                     <div class="flex flex-wrap items-center gap-2" x-data="{ reset: false, openImport: false }">
-                        <div class="flex items-center">
-                            <button wire:click="exportexcel()" class="text-white pb-1 me-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button wire:click="exportexcel()" class="text-white flex items-center gap-2 me-2 pb-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                                 </svg>
+                                <span>Excel</span>
                             </button>
-                            <button wire:click="cekJumlah()" class="text-white pb-1 me-2">
+                            <button wire:click="cekJumlah()" class="text-white flex items-center gap-2 me-2 pb-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Zm3.75 11.625a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
                                 </svg>
+                                <span>Check</span>
                             </button>
-                            <button class="text-white pb-1 me-2" x-show="!reset" @click="reset = true">
+                            <button x-show="!reset" @click="reset = true" class="text-white me-2 pb-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
@@ -60,20 +63,21 @@
                             </button>
                             <div class="flex" x-show="reset" x-transition @click.outside="reset = false">
                                 @if ($kolomcheck == null)
-                                    <button @click="reset = false" type="button" wire:click="resetTable()" class="text-red-400 pb-1 me-2 whitespace-nowrap">Ya Reset Tabel</button>\
+                                    <button @click="reset = false" type="button" wire:click="resetTable()" class="text-red-400 pb-1 me-2 whitespace-nowrap">Ya Kosongkan Data</button>\
                                 @else
                                     <button @click="reset = false" type="button" wire:click="resetTable()" class="text-red-400 pb-1 me-2 whitespace-nowrap">Hapus Data Dipilih</button>\
                                 @endif
                                 <button type="button" class="text-orange-400 pb-1 me-2" x-on:click="reset = false">Batalkan</button>
                             </div>
-                            <button @click="openImport = true" x-show="!openImport" class="text-white pb-1 me-2">
+                            <button @click="openImport = true" x-show="!openImport" class="text-white flex items-center gap-2 me-2 pb-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m6.75 12-3-3m0 0-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                                 </svg>
+                                <span>Sinkron Neo</span>
                             </button>
                             <div class="flex" x-show="openImport" x-transition @click.outside="openImport = false">
-                                <button @click="openImport = false" type="button" wire:click="startImport()" class="text-red-400 pb-1 me-2 whitespace-nowrap">Ya, Import</button>
+                                <button @click="openImport = false" type="button" wire:click="startImport()" class="text-red-400 pb-1 me-2 whitespace-nowrap">Ya, Sinkron</button>
                                 <button type="button" class="text-orange-400 pb-1 me-2" x-on:click="openImport = false">Batalkan</button>
                             </div>
                             @if ($running)
@@ -85,15 +89,13 @@
                             @endif
                         </div>
                         <div class="flex flex-wrap md:flex-nowrap gap-2">
+                            <input wire:model.live.debounce.500ms="search" placeholder="Cari Nama / NIM" type="text"
+                                class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-8 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
                             <div class="w-full">
                                 {{-- filter prodi --}}
                                 <div class="relative">
                                     <input {{ $running ? 'disabled' : '' }} wire:model.live="searchProdi" list="prodiList" id="prodiInput" placeholder="Pilih atau ketik Prodi..."
-                                        class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10
-                       dark:focus:border-brand-800 h-8 w-full rounded-lg border border-gray-300
-                       bg-transparent px-4 py-2.5 text-base text-gray-800 placeholder:text-gray-400
-                       focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900
-                       dark:text-white/90 dark:placeholder:text-white/30" />
+                                        class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-8 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-base text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
                                     <datalist id="prodiList">
                                         @foreach ($prodis as $item)
                                             <option value="{{ $item->jenjang_nama_prodi }}"></option>
@@ -101,8 +103,19 @@
                                     </datalist>
                                 </div>
                             </div>
-                            <input wire:model.live.debounce.500ms="search" placeholder="Cari Nama / NIM" type="text"
-                                class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-8 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
+                            <div class="w-full">
+                                {{-- filter status mahasiswa --}}
+                                <div class="relative">
+                                    <input {{ $running ? 'disabled' : '' }} wire:model.live="searchNamaStatusMahasiswa" list="statusMahasiswaList" id="statusMahasiswaInput"
+                                        placeholder="Pilih atau ketik Status Mahasiswa..."
+                                        class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-8 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-base text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
+                                    <datalist id="statusMahasiswaList">
+                                        @foreach ($namaStatusMahasiswaList as $status)
+                                            <option value="{{ $status }}"></option>
+                                        @endforeach
+                                    </datalist>
+                                </div>
+                            </div>
 
                         </div>
                         <button wire:click="thisreset()" class="text-white pb-1 me-2">
@@ -110,7 +123,6 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3" />
                             </svg>
-
                         </button>
 
                     </div>

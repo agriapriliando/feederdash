@@ -150,4 +150,11 @@ class Mahasiswa extends Model
             $q->where('nama_program_studi', 'like', $term);
         });
     }
+
+    public function scopeSearchNamaStatusMahasiswa($query, $status)
+    {
+        return $query->when($status, function ($q) use ($status) {
+            $q->where('nama_status_mahasiswa', $status);
+        });
+    }
 }
