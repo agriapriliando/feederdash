@@ -23,7 +23,7 @@
     @endif
 </head>
 
-<body x-data="{ page: 'ecommerce', 'loaded': false, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': true, 'scrollTop': false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
+<body x-data="{ page: 'mahasiswa', 'loaded': false, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
 $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" :class="{ 'dark bg-gray-900': darkMode === true }">
     <!-- ===== Preloader Start ===== -->
     <div x-show="loaded" x-init="window.addEventListener('DOMContentLoaded', () => { setTimeout(() => loaded = false, 500) })" class="fixed left-0 top-0 z-999999 flex h-screen w-screen items-center justify-center bg-white dark:bg-black">
@@ -40,11 +40,12 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
             <!-- SIDEBAR HEADER -->
             <div :class="sidebarToggle ? 'justify-center' : 'justify-between'" class="flex items-center gap-2 pt-8 sidebar-header pb-7">
                 <a href="index.html">
-                    <span class="logo text-gray-300 dark:text-gray-400 text-lg" :class="sidebarToggle ? 'hidden' : ''">
-                        FeederDash
+                    <span class="logo" :class="sidebarToggle ? 'hidden' : ''">
+                        <img class="dark:hidden" src="https://iaknpky.ac.id/wp-content/uploads/2025/04/cropped-logo_iaknpky-mini-white.png" alt="Logo" />
+                        <img class="hidden dark:block" src="https://iaknpky.ac.id/wp-content/uploads/2025/04/cropped-logo_iaknpky-mini-white.png" alt="Logo" />
                     </span>
 
-                    <img class="logo-icon" :class="sidebarToggle ? 'lg:block' : 'hidden'" src="src/images/logo/logo-icon.svg" alt="Logo" />
+                    <img class="logo-icon" :class="sidebarToggle ? 'lg:block' : 'hidden'" src="https://iaknpky.ac.id/wp-content/uploads/2025/04/cropped-logo_iaknpky-mini-white.png" alt="Logo" />
                 </a>
             </div>
             <!-- SIDEBAR HEADER -->
@@ -130,10 +131,9 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
                         Feeder Dash By Agri
                     </h3>
                     <p class="mb-4 text-gray-500 text-theme-sm dark:text-gray-400">
-                        Leading Tailwind CSS Admin Template with 400+ UI Component and Pages.
+                        Aplikasi Dashboard Feeder untuk Monitoring Data Neo Feeder PDDIKTI
                     </p>
-                    <a href="https://tailadmin.com/pricing" target="_blank" rel="nofollow"
-                        class="flex items-center justify-center p-3 font-medium text-white rounded-lg bg-brand-500 text-theme-sm hover:bg-brand-600">
+                    <a href="#" target="_blank" rel="nofollow" class="flex items-center justify-center p-3 font-medium text-white rounded-lg bg-brand-500 text-theme-sm hover:bg-brand-600">
                         Lebih Banyak
                     </a>
                 </div>
@@ -181,8 +181,8 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
                         <!-- Hamburger Toggle BTN -->
 
                         <a href="index.html" class="lg:hidden">
-                            <img class="dark:hidden" src="src/images/logo/logo.svg" alt="Logo" />
-                            <img class="hidden dark:block" src="src/images/logo/logo-dark.svg" alt="Logo" />
+                            <img class="dark:hidden" src="https://iaknpky.ac.id/wp-content/uploads/2025/04/cropped-logo_iaknpky-mini-white.png" alt="Logo" />
+                            <img class="hidden dark:block" src="https://iaknpky.ac.id/wp-content/uploads/2025/04/cropped-logo_iaknpky-mini-white.png" alt="Logo" />
                         </a>
 
                         <!-- Application nav menu button -->
