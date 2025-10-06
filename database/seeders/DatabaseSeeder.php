@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Mahasiswa;
+use App\Models\Prodi;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,9 +17,14 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // User::factory()->create([
+        //     'name' => 'Agri Apriliando',
+        //     'email' => 'upttipdiaknpky@gmail.com',
+        //     'password' => bcrypt('123'),
+        // ]);
+        $this->call([
+            // ProdiSeeder::class,
+            // MahasiswaSeeder::class,
         ]);
     }
 }

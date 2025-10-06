@@ -34,7 +34,6 @@ class MahasiswaList extends Component
     public $datanew = 0;
     public $dataold = 0;
 
-
     public function cekJumlah()
     {
         if ($this->searchProdi) {

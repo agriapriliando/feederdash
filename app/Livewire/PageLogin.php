@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -15,7 +16,11 @@ class PageLogin extends Component
 
     public function login()
     {
-        if ($this->password == '177K@limantan') {
+        $credentials = [
+            'email' => 'upttipdiaknpky@gmail.com',
+            'password' => $this->password,
+        ];
+        if (Auth::attempt($credentials)) {
             // Simpan cache menandakan sudah login
             $cacheKey = 'user_logged_in';
             // Simpan nilai true dengan masa aktif 1 jam
@@ -30,6 +35,9 @@ class PageLogin extends Component
     public function logout()
     {
         Cache::forget('user_logged_in');
+        Auth::logout();
+        session()->invalidate();
+        session()->regenerateToken();
         return redirect()->route('login');
     }
 
