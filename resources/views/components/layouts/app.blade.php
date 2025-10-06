@@ -12,7 +12,10 @@
     <link href="{{ asset('') }}/src/style.css" rel="stylesheet">
     {{-- TAILADMIN TAILWIND CSS --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @if (app()->environment('local'))
+        {{-- Environment: LOCAL --}}
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @endif
 </head>
 
 <body x-data="{ page: 'ecommerce', 'loaded': false, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': true, 'scrollTop': false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
