@@ -12,9 +12,14 @@
     <link href="{{ asset('') }}/src/style.css" rel="stylesheet">
     {{-- TAILADMIN TAILWIND CSS --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    {{-- Kondisi environment: local vs production --}}
     @if (app()->environment('local'))
-        {{-- Environment: LOCAL --}}
+        {{-- LOCAL: gunakan vite dev server --}}
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @else
+        {{-- PRODUCTION: gunakan file hasil build --}}
+        <link rel="stylesheet" href="{{ asset('build/assets/app-DJtqOVYg.css') }}">
+        <script src="{{ asset('build/assets/app-Bj43h_rG.js') }}" defer></script>
     @endif
 </head>
 
