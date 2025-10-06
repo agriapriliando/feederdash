@@ -189,8 +189,7 @@ class MahasiswaList extends Component
             $this->kolomcheck = [];
             return;
         } else {
-            Mahasiswa::truncate();
-            session()->flash('message', 'Seluruh Data Mahasiswa telah direset.');
+            session()->flash('message', 'Silahkan Pilih Dulu Data yang akan dihapus.');
         }
     }
 
