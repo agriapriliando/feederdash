@@ -285,6 +285,7 @@ class MahasiswaList extends Component
             'mahasiswa' => Mahasiswa::search($this->search)
                 ->searchProdi($this->searchProdi)
                 ->searchNamaStatusMahasiswa($this->searchNamaStatusMahasiswa)
+                ->orderBy('created_at', 'desc')
                 ->paginate($this->perPage),
             'prodis' => Prodi::orderBy('nama_program_studi')->get(),
             'chartData' => $chartData,
